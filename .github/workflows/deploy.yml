@@ -1,7 +1,5 @@
 name: Publish Fantasy U2 preview
 on:
-  release:
-    types: [published]
   workflow_dispatch:
     inputs:
       release_tag:
@@ -26,7 +24,7 @@ jobs:
       - name: Download the reviewed static build
         env:
           GH_TOKEN: ${{ github.token }}
-          RELEASE_TAG: ${{ github.event.release.tag_name || inputs.release_tag }}
+          RELEASE_TAG: ${{ inputs.release_tag }}
         run: |
           mkdir -p "$RUNNER_TEMP/fantasy-preview"
           gh release download "$RELEASE_TAG" --repo "$GITHUB_REPOSITORY" --pattern site.zip --pattern SHA256SUMS --dir "$RUNNER_TEMP/fantasy-preview"
